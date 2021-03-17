@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import com.SunnylightStudios.entities.Entity;
 import com.SunnylightStudios.entities.Player;
 import com.SunnylightStudios.graphics.SpriteSheet;
+import com.SunnylightStudios.world.World;
 
 public class Game extends Canvas implements Runnable, KeyListener {
 	
@@ -35,18 +36,28 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public Player player1;
 	public static SpriteSheet spritesheetPlayer1;
 	public static SpriteSheet spritesheetEnemyBat;
+	public static SpriteSheet spritesheetVillage;
+	public static SpriteSheet spritesheetItems;
+	
+	//World
+	public static World world;
 	
 	public Game() {
 		this.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		this.addKeyListener(this); //Which class is gonna receive KeyListener.
 		this.initFrame();
 		
+		//Spritesheets
+		spritesheetPlayer1 = new SpriteSheet("/spritesheet_player1.png");	
+		spritesheetEnemyBat = new SpriteSheet("/spritesheet_enemy_bat.png");
+		spritesheetVillage = new SpriteSheet("/spritesheet_village.png");
+		spritesheetItems = new SpriteSheet("/spritesheet_village.png");
+		
 		//Initializing objects
+		world = new World("/map1.png");
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
 		
-		spritesheetPlayer1 = new SpriteSheet("/spritesheet_player1.png");	
-		spritesheetEnemyBat = new SpriteSheet("/spritesheet_enemy_bat.png");
 		player1 = new Player(0, 0, 30, 48, spritesheetPlayer1.getSprite(0, 0, 32, 50));
 		
 		entities.add(player1);
@@ -83,11 +94,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		game.start();
 	}
 		
-		
-	public void start_1() {
-		//TODO
-	}
-	
 	public void update() {
 		//TODO
 	}
@@ -103,6 +109,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		g = image.getGraphics(); //Render screen images
 		g.setColor(new Color(0, 0, 0));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
+		
+		world.render(g);
 		
 		for(int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);

@@ -5,11 +5,14 @@ import java.awt.image.BufferedImage;
 
 import com.SunnylightStudios.main.Game;
 
-public class Player extends Entity {
+public class Player extends Entity{
 
-	private boolean left, up, right, down;
+	private boolean left, up, right, down, moved;
 	private int speed = 2;
-	//private int frames = 0;
+	private int frames = 0;
+	private int maxFrames = 12;
+	private int index = 0;
+	private int maxIndex = 3;
 	
 	private BufferedImage[] rightPlayer;
 	private BufferedImage[] leftPlayer;
@@ -19,6 +22,66 @@ public class Player extends Entity {
 	
 	public Player(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
+		
+		createPlayerSprites();
+	}
+	
+	@Override
+	public void render(Graphics g) {
+			if(moved == false) {
+				g.drawImage(lastImage, this.getX(), this.getY(), null);
+			}	
+			if(right) {
+				g.drawImage(rightPlayer[index], this.getX(), this.getY(), null);
+				lastImage = rightPlayer[0];
+			}
+			else if(left) {
+				g.drawImage(leftPlayer[index], this.getX(), this.getY(), null);
+				lastImage = leftPlayer[0];
+			}
+			if(up) {
+				g.drawImage(upPlayer[index], this.getX(), this.getY(), null);
+				lastImage = upPlayer[0];
+			}
+			else if(down) {
+				g.drawImage(downPlayer[index], this.getX(), this.getY(), null);
+				lastImage = downPlayer[0];
+			}
+		}
+	
+	@Override
+	public void tick() {
+		moved = false;
+		
+		if(left) {
+			moved = true;
+			this.setX(this.getX() - this.getSpeed());
+		}
+		else if(right) {
+			moved = true;
+			this.setX(this.getX() + this.getSpeed());
+		}
+		if(up) {
+			moved = true;
+			this.setY(this.getY() - this.getSpeed());
+		}
+		else if(down) {
+			moved = true;
+			this.setY(this.getY() + this.getSpeed());
+		}
+		if(moved) {
+			frames++;
+			if(frames == maxFrames) {
+				frames = 0;
+				index++;
+				if(index > maxIndex) {
+					index = 0;
+				}
+			}
+		}
+	}
+	
+	private void createPlayerSprites() {
 		
 		rightPlayer = new BufferedImage[4];
 		leftPlayer = new BufferedImage[4];
@@ -46,44 +109,6 @@ public class Player extends Entity {
 		upPlayer[3] = Game.spritesheetPlayer1.getSprite(96, 144, 32, 48);
 		
 		lastImage = downPlayer[0];
-	}
-	
-	@Override
-	public void render(Graphics g) {
-		g.drawImage(lastImage, this.getX(), this.getY(), null);
-		
-		if(right) {
-			g.drawImage(rightPlayer[0], this.getX(), this.getY(), null);
-			lastImage = rightPlayer[0];
-		}
-		else if(left) {
-			g.drawImage(leftPlayer[0], this.getX(), this.getY(), null);
-			lastImage = leftPlayer[0];
-		}
-		if(up) {
-			g.drawImage(upPlayer[0], this.getX(), this.getY(), null);
-			lastImage = upPlayer[0];
-		}
-		else if(down) {
-			g.drawImage(downPlayer[0], this.getX(), this.getY(), null);
-			lastImage = downPlayer[0];
-		}
-	}
-	
-	@Override
-	public void tick() {
-		if(left) {
-			this.setX(this.getX() - this.getSpeed());
-		}
-		else if(right) {
-			this.setX(this.getX() + this.getSpeed());
-		}
-		if(up) {
-			this.setY(this.getY() - this.getSpeed());
-		}
-		else if(down) {
-			this.setY(this.getY() + this.getSpeed());
-		}
 	}
 	
 	//Getters & Setters
@@ -125,5 +150,85 @@ public class Player extends Entity {
 
 	public void setSpeed(int speed) {
 		this.speed = speed;
+	}
+
+	public int getFrames() {
+		return frames;
+	}
+
+	public void setFrames(int frames) {
+		this.frames = frames;
+	}
+
+	public int getMaxFrames() {
+		return maxFrames;
+	}
+
+	public void setMaxFrames(int maxFrames) {
+		this.maxFrames = maxFrames;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
+	public int getMaxIndex() {
+		return maxIndex;
+	}
+
+	public void setMaxIndex(int maxIndex) {
+		this.maxIndex = maxIndex;
+	}
+
+	public boolean isMoved() {
+		return moved;
+	}
+
+	public void setMoved(boolean moved) {
+		this.moved = moved;
+	}
+
+	public BufferedImage[] getRightPlayer() {
+		return rightPlayer;
+	}
+
+	public void setRightPlayer(BufferedImage[] rightPlayer) {
+		this.rightPlayer = rightPlayer;
+	}
+
+	public BufferedImage[] getLeftPlayer() {
+		return leftPlayer;
+	}
+
+	public void setLeftPlayer(BufferedImage[] leftPlayer) {
+		this.leftPlayer = leftPlayer;
+	}
+
+	public BufferedImage[] getUpPlayer() {
+		return upPlayer;
+	}
+
+	public void setUpPlayer(BufferedImage[] upPlayer) {
+		this.upPlayer = upPlayer;
+	}
+
+	public BufferedImage[] getDownPlayer() {
+		return downPlayer;
+	}
+
+	public void setDownPlayer(BufferedImage[] downPlayer) {
+		this.downPlayer = downPlayer;
+	}
+
+	public BufferedImage getLastImage() {
+		return lastImage;
+	}
+
+	public void setLastImage(BufferedImage lastImage) {
+		this.lastImage = lastImage;
 	}
 }
