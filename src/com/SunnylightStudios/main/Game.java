@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.JFrame;
 
 import com.SunnylightStudios.entities.Entity;
+import com.SunnylightStudios.entities.EntityItems;
 import com.SunnylightStudios.entities.Player;
 import com.SunnylightStudios.graphics.SpriteSheet;
 import com.SunnylightStudios.world.World;
@@ -22,18 +23,19 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	
 	private static final long serialVersionUID = 1L;
 	public static JFrame frame;
-	private Thread thread;
+	public static final int WIDTH = 480;
+	public static final int HEIGHT = 320;
+	public static final int SCALE = 2;
 	private boolean isRunning = true;
-	private static final int WIDTH = 480;
-	private static final int HEIGHT = 360;
-	private static final int SCALE = 2;
-	
+	private Thread thread;
+
 	private BufferedImage image;
 	private Graphics g;
 	
 	//Entities
-	public List<Entity> entities;
-	public Player player1;
+	public static List<Entity> entities;
+	public static List<EntityItems> items;
+	public static Player player1;
 	public static SpriteSheet spritesheetPlayer1;
 	public static SpriteSheet spritesheetEnemyBat;
 	public static SpriteSheet spritesheetVillage;
@@ -44,23 +46,21 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	
 	public Game() {
 		this.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-		this.addKeyListener(this); //Which class is gonna receive KeyListener.
+		this.addKeyListener(this); //The 'this' means which class is gonna receive KeyListener.
 		this.initFrame();
 		
 		//Spritesheets
 		spritesheetPlayer1 = new SpriteSheet("/spritesheet_player1.png");	
 		spritesheetEnemyBat = new SpriteSheet("/spritesheet_enemy_bat.png");
 		spritesheetVillage = new SpriteSheet("/spritesheet_village.png");
-		spritesheetItems = new SpriteSheet("/spritesheet_village.png");
+		spritesheetItems = new SpriteSheet("/spritesheet_items.png");
 		
 		//Initializing objects
+		entities = new ArrayList<Entity>();
+		items = new ArrayList<EntityItems>();
+		player1 = new Player(0, 0, 30, 48, spritesheetPlayer1.getSprite(0, 0, 32, 50));	
 		world = new World("/map1.png");
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-		entities = new ArrayList<Entity>();
-		
-		player1 = new Player(0, 0, 30, 48, spritesheetPlayer1.getSprite(0, 0, 32, 50));
-		
-		entities.add(player1);
 	}
 	
 	public void initFrame() {
@@ -110,13 +110,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		g.setColor(new Color(0, 0, 0));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
-		world.render(g);
-		
-		for(int i = 0; i < entities.size(); i++) {
-			Entity e = entities.get(i);
-			e.render(g);
-		}
-		
+		renderWorld();
+
 		g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
 		
@@ -163,7 +158,31 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		
 		stop();
 	}
-
+	
+	// PRIVATE METHODS
+	
+	private void renderEntities() {
+		for(Entity i : entities) {
+			i.render(g);
+		}
+	}
+	
+	private void renderItems() {
+		for(EntityItems i : items) {
+			i.render(g);
+		}
+	}
+	
+	private void renderWorld() {
+		world.renderFloor(g);
+		world.renderWalls(g);
+		renderItems();
+		renderEntities();
+		world.renderFloats(g);
+	}
+	
+	// KEY LISTENERS
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
@@ -200,7 +219,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 }

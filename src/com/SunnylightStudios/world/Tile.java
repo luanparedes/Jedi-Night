@@ -8,7 +8,7 @@ import com.SunnylightStudios.main.Game;
 public class Tile {
 
 	public static BufferedImage TILE_GRASS = Game.spritesheetVillage.getSprite(0, 64, 32, 32);
-	public static BufferedImage TILE_ROCK = Game.spritesheetVillage.getSprite(0, 0, 32, 32);
+	public static BufferedImage TILE_ROCK = Game.spritesheetVillage.getSprite(0, 32, 32, 32);
 	
 	private int x, y;
 	private BufferedImage sprite;
@@ -20,6 +20,6 @@ public class Tile {
 	}
 	
 	public void render(Graphics g) {
-		g.drawImage(sprite, x, y, null);
+		g.drawImage(sprite, x - Camera.x, y - Camera.y, null);
 	}
 }

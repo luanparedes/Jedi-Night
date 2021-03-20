@@ -3,12 +3,22 @@ package com.SunnylightStudios.entities;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import com.SunnylightStudios.main.Game;
+import com.SunnylightStudios.world.Camera;
+
 public class Entity {
 
 	private int x;
 	private int y;
 	private int width;
 	private int height;
+	
+	public static BufferedImage SABER = Game.spritesheetItems.getSprite(128, 0, 32, 32);
+	public static BufferedImage LASER_GUN = Game.spritesheetItems.getSprite(160, 0, 32, 32);
+	public static BufferedImage LIFEPACK_HEART = Game.spritesheetItems.getSprite(96, 0, 32, 32);
+	public static BufferedImage COCACOLA = Game.spritesheetItems.getSprite(0, 0, 32, 32);
+	public static BufferedImage GOLD = Game.spritesheetItems.getSprite(32, 0, 32, 32);
+	public static BufferedImage CROSS = Game.spritesheetItems.getSprite(256, 0, 32, 32);
 	
 	private BufferedImage sprite;
 	
@@ -20,8 +30,14 @@ public class Entity {
 		this.setSprite(sprite);
 	}
 	
+	public Entity(int x, int y, BufferedImage sprite) {
+		this.setX(x);
+		this.setY(y);
+		this.setSprite(sprite);
+	}
+	
 	public void render(Graphics g) {
-		g.drawImage(sprite, this.getX(), this.getY(), null);
+		g.drawImage(sprite, this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 	
 	public void tick() {

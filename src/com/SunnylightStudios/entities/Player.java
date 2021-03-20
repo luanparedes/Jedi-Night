@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import com.SunnylightStudios.main.Game;
+import com.SunnylightStudios.world.Camera;
+import com.SunnylightStudios.world.World;
 
 public class Player extends Entity{
 
@@ -20,31 +22,34 @@ public class Player extends Entity{
 	private BufferedImage[] downPlayer;
 	private BufferedImage lastImage;
 	
+	//private Collider collider;
+	
 	public Player(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
 		
+		//collider = new Collider(width, height);
 		createPlayerSprites();
 	}
 	
 	@Override
 	public void render(Graphics g) {
 			if(moved == false) {
-				g.drawImage(lastImage, this.getX(), this.getY(), null);
+				g.drawImage(lastImage, this.getX() - Camera.x, this.getY() - Camera.y, null);
 			}	
 			if(right) {
-				g.drawImage(rightPlayer[index], this.getX(), this.getY(), null);
+				g.drawImage(rightPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 				lastImage = rightPlayer[0];
 			}
 			else if(left) {
-				g.drawImage(leftPlayer[index], this.getX(), this.getY(), null);
+				g.drawImage(leftPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 				lastImage = leftPlayer[0];
 			}
 			if(up) {
-				g.drawImage(upPlayer[index], this.getX(), this.getY(), null);
+				g.drawImage(upPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 				lastImage = upPlayer[0];
 			}
 			else if(down) {
-				g.drawImage(downPlayer[index], this.getX(), this.getY(), null);
+				g.drawImage(downPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 				lastImage = downPlayer[0];
 			}
 		}
@@ -79,6 +84,9 @@ public class Player extends Entity{
 				}
 			}
 		}
+		
+		Camera.x = Camera.clamp(this.getX() - (Game.WIDTH / 2), 0, World.WIDTH * 32 - Game.WIDTH);
+		Camera.y = Camera.clamp(this.getY() - (Game.HEIGHT / 2), 0, World.HEIGHT * 32 - Game.HEIGHT);
 	}
 	
 	private void createPlayerSprites() {
@@ -109,6 +117,10 @@ public class Player extends Entity{
 		upPlayer[3] = Game.spritesheetPlayer1.getSprite(96, 144, 32, 48);
 		
 		lastImage = downPlayer[0];
+	}
+	
+	public boolean isColliding() {
+		return true;
 	}
 	
 	//Getters & Setters

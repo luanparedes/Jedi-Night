@@ -4,8 +4,9 @@ import java.awt.image.BufferedImage;
 
 public class TileWall extends Tile{
 
+	public static final int VISIBLE = 2;
+	
 	public TileWall(int x, int y, BufferedImage sprite) {
 		super(x, y, sprite);
 	}
-
 }
