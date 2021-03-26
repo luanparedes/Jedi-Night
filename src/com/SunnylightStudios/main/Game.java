@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
+import com.SunnylightStudios.controls.Visibility;
 import com.SunnylightStudios.entities.Entity;
 import com.SunnylightStudios.entities.EntityItems;
 import com.SunnylightStudios.entities.Player;
@@ -110,7 +111,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		g.setColor(new Color(0, 0, 0));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
-		renderWorld();
+		renderAllScene();
 
 		g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
@@ -160,25 +161,45 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	}
 	
 	// PRIVATE METHODS
+	private void renderWater() {
+		World.renderWater(g);
+	}
 	
-	private void renderEntities() {
-		for(Entity i : entities) {
-			i.render(g);
-		}
+	private void renderFloor() {
+		World.renderFloor(g);
+	}
+	
+	private void renderTilesCollision() {
+		World.renderColliderTiles(g);
 	}
 	
 	private void renderItems() {
 		for(EntityItems i : items) {
-			i.render(g);
+			if(i.VISIBLE == Visibility.ITEMS_TILE) {
+				i.render(g);
+			}
 		}
 	}
+
+	private void renderEntities() {
+		for(Entity i : entities) {
+			if(i.VISIBLE == Visibility.ENTITY_TILE) {
+				i.render(g);
+			}
+		}
+	}
+		
+	private void renderFloats() {
+		World.renderFloats(g);
+	}	
 	
-	private void renderWorld() {
-		world.renderFloor(g);
-		world.renderWalls(g);
-		renderItems();
-		renderEntities();
-		world.renderFloats(g);
+	private void renderAllScene() {
+		this.renderWater();
+		this.renderFloor();
+		this.renderTilesCollision();
+		this.renderItems();
+		this.renderEntities();
+		this.renderFloats();
 	}
 	
 	// KEY LISTENERS

@@ -2,11 +2,14 @@ package com.SunnylightStudios.world;
 
 import java.awt.image.BufferedImage;
 
-public class TileWall extends Tile{
+import com.SunnylightStudios.controls.Collider;
+import com.SunnylightStudios.controls.Visibility;
 
-	public static final int VISIBLE = 2;
+public class TileWall extends Tile{
 	
-	public TileWall(int x, int y, BufferedImage sprite) {
+	public TileWall(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, sprite);
+		this.collider = new Collider(this.x, this.y, width, height);
+		this.VISIBLE = Visibility.CONTACT_TILE;
 	}
 }

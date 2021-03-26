@@ -3,15 +3,21 @@ package com.SunnylightStudios.entities;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import com.SunnylightStudios.controls.Collider;
+import com.SunnylightStudios.controls.Visibility;
 import com.SunnylightStudios.main.Game;
 import com.SunnylightStudios.world.Camera;
 
 public class Entity {
 
-	private int x;
-	private int y;
-	private int width;
-	private int height;
+	protected int x;
+	protected int y;
+	protected int width;
+	protected int height;
+	
+	private BufferedImage sprite;
+	public Collider collider;
+	public Visibility VISIBLE;
 	
 	public static BufferedImage SABER = Game.spritesheetItems.getSprite(128, 0, 32, 32);
 	public static BufferedImage LASER_GUN = Game.spritesheetItems.getSprite(160, 0, 32, 32);
@@ -19,8 +25,6 @@ public class Entity {
 	public static BufferedImage COCACOLA = Game.spritesheetItems.getSprite(0, 0, 32, 32);
 	public static BufferedImage GOLD = Game.spritesheetItems.getSprite(32, 0, 32, 32);
 	public static BufferedImage CROSS = Game.spritesheetItems.getSprite(256, 0, 32, 32);
-	
-	private BufferedImage sprite;
 	
 	public Entity(int x, int y, int width, int height, BufferedImage sprite) {
 		this.setX(x);

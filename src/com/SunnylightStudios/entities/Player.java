@@ -3,6 +3,8 @@ package com.SunnylightStudios.entities;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import com.SunnylightStudios.controls.Collider;
+import com.SunnylightStudios.controls.Visibility;
 import com.SunnylightStudios.main.Game;
 import com.SunnylightStudios.world.Camera;
 import com.SunnylightStudios.world.World;
@@ -10,7 +12,9 @@ import com.SunnylightStudios.world.World;
 public class Player extends Entity{
 
 	private boolean left, up, right, down, moved;
-	private int speed = 2;
+	private int right_dir = 0, left_dir = 1;
+	private int dir = right_dir;
+	private double speed = 2;
 	private int frames = 0;
 	private int maxFrames = 12;
 	private int index = 0;
@@ -21,13 +25,12 @@ public class Player extends Entity{
 	private BufferedImage[] upPlayer;
 	private BufferedImage[] downPlayer;
 	private BufferedImage lastImage;
-	
-	//private Collider collider;
-	
+
 	public Player(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
+		this.collider = new Collider(x, y + 22, 32, 32);
+		this.VISIBLE = Visibility.ENTITY_TILE;
 		
-		//collider = new Collider(width, height);
 		createPlayerSprites();
 	}
 	
@@ -36,6 +39,7 @@ public class Player extends Entity{
 			if(moved == false) {
 				g.drawImage(lastImage, this.getX() - Camera.x, this.getY() - Camera.y, null);
 			}	
+			
 			if(right) {
 				g.drawImage(rightPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 				lastImage = rightPlayer[0];
@@ -52,27 +56,32 @@ public class Player extends Entity{
 				g.drawImage(downPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 				lastImage = downPlayer[0];
 			}
+		
 		}
 	
 	@Override
 	public void tick() {
+		this.collider.x = x;
+		this.collider.y = y + 22;
 		moved = false;
 		
-		if(left) {
+		if(left && World.isFree((int)(this.getX() - speed), this.getY() + 20)) {
 			moved = true;
-			this.setX(this.getX() - this.getSpeed());
+			dir = left_dir;
+			x -= speed;
 		}
-		else if(right) {
+		else if(right && World.isFree((int)(this.getX() + speed), this.getY() + 20)) {
 			moved = true;
-			this.setX(this.getX() + this.getSpeed());
+			dir = right_dir;
+			x += speed;
 		}
-		if(up) {
+		if(up && World.isFree(this.getX(), (int)((this.getY() + 20) - speed))) {
 			moved = true;
-			this.setY(this.getY() - this.getSpeed());
+			y -= speed;
 		}
-		else if(down) {
+		else if(down && World.isFree(this.getX(), (int)((this.getY() + 20) + speed))) {
 			moved = true;
-			this.setY(this.getY() + this.getSpeed());
+			y += speed;
 		}
 		if(moved) {
 			frames++;
@@ -84,7 +93,6 @@ public class Player extends Entity{
 				}
 			}
 		}
-		
 		Camera.x = Camera.clamp(this.getX() - (Game.WIDTH / 2), 0, World.WIDTH * 32 - Game.WIDTH);
 		Camera.y = Camera.clamp(this.getY() - (Game.HEIGHT / 2), 0, World.HEIGHT * 32 - Game.HEIGHT);
 	}
@@ -156,7 +164,7 @@ public class Player extends Entity{
 		this.down = down;
 	}
 
-	public int getSpeed() {
+	public double getSpeed() {
 		return speed;
 	}
 
