@@ -51,7 +51,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		this.initFrame();
 		
 		//Spritesheets
-		spritesheetPlayer1 = new SpriteSheet("/spritesheet_player1.png");	
+		spritesheetPlayer1 = new SpriteSheet("/spritesheet_player3.png");	
 		spritesheetEnemyBat = new SpriteSheet("/spritesheet_enemy_bat.png");
 		spritesheetVillage = new SpriteSheet("/spritesheet_village.png");
 		spritesheetItems = new SpriteSheet("/spritesheet_items.png");
@@ -183,9 +183,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 	private void renderEntities() {
 		for(Entity i : entities) {
-			if(i.VISIBLE == Visibility.ENTITY_TILE) {
-				i.render(g);
-			}
+			i.render(g);
 		}
 	}
 		
