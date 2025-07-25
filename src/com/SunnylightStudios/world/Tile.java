@@ -11,9 +11,7 @@ public class Tile
 {
 	public Visibility VISIBLE;
 	public Collider collider;
-	
-	public static BufferedImage TILE_GRASS = Game.spritesheetVillage.getSprite(0, 64, 32, 32);
-	public static BufferedImage TILE_ROCK = Game.spritesheetVillage.getSprite(0, 32, 32, 32);
+
 	public static BufferedImage TILE_BARRIL = Game.spritesheetVillage.getSprite(32, 224, 32, 32);
 	
 	protected int x, y, width, height;

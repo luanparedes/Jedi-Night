@@ -22,7 +22,7 @@ public class World
 	public static int[] pixels;
 	public static  int WIDTH, HEIGHT;
 	public static int TILE_SIZE = 32;
-	
+
 	public World(String path) 
 	{
 		try 
@@ -39,56 +39,56 @@ public class World
 			wallTiles = new ArrayList<TileWall>();
 			waterTiles = new ArrayList<TileWater>();
 			floatTiles = new ArrayList<TileFloat>();
-			
-			for(int xx = 0; xx < WIDTH; xx++) 
+
+			for(int xx = 0; xx < WIDTH; xx++)
 			{
 				for(int yy = 0; yy < HEIGHT; yy++) 
 				{
 					switch(pixels[xx + (yy * WIDTH)]) 
 					{
-						case 0xff000000:
+						case MapColor.BLACK_1:
 							tiles[xx + (yy * WIDTH)] = new TileFloor(xx * 32, yy *  32, TileFloor.TILE_GRASS);
 							break;
-						case 0xffffffff:
+						case MapColor.YELLOW_1:
 							tiles[xx + (yy * WIDTH)] = new TileFloor(xx * 32, yy *  32, TileFloor.TILE_GRASS);
 							wallTiles.add(new TileWall(xx * 32, yy * 32, 30, 30, TileFloor.TILE_ROCK));
 							break;
-						case 0xff3d6b67:
+						case MapColor.YELLOW_2:
 							tiles[xx + (yy * WIDTH)] = new TileFloor(xx * 32, yy *  32, TileFloor.TILE_GRASS);
 							wallTiles.add(new TileWall(xx * 32, yy * 32, 30, 30, TileWall.TILE_BARRIL));
 							break;
-						case 0xff00ff00:
+						case MapColor.BLUE_1:
 							tiles[xx + (yy * WIDTH)] = new TileFloor(xx * 32, yy *  32, TileFloor.TILE_GRASS);
 							Game.items.add(new EntityItems(xx * 32, yy *  32, 32, 32, EntityItems.COCACOLA));
 							break;
-						case 0xff001fff:
+						case MapColor.GREEN_1:
 							tiles[xx + (yy * WIDTH)] = new TileFloor(xx * 32, yy *  32, TileFloor.TILE_GRASS);
 							Game.entities.add(Game.player1);
 							Game.player1.setX(xx * 32);
 							Game.player1.setY(yy * 32);
 							break;
-						case 0xffff0000:
+						case MapColor.RED_1:
 							tiles[xx + (yy * WIDTH)] = new TileFloor(xx * 32, yy *  32, TileFloor.TILE_GRASS);
 							Game.entities.add(new Enemy(xx * 32, yy * 32, Enemy.ENEMY_BAT));
 							break;
-						case 0xfff7f119:
+						case MapColor.BLUE_2:
 							tiles[xx + (yy * WIDTH)] = new TileFloor(xx * 32, yy *  32, TileFloor.TILE_GRASS);
 							Game.items.add(new Weapon(xx * 32, yy *  32, 32, 32, Weapon.SABER));
 							break;
-						case 0xff9d6e2d:
+						case MapColor.BLUE_3:
 							tiles[xx + (yy * WIDTH)] = new TileFloor(xx * 32, yy *  32, TileFloor.TILE_GRASS);
 							Game.items.add(new EntityItems(xx * 32, yy *  32, 32, 32, EntityItems.GOLD));
 							break;
-						case 0xffe329e9:
+						case MapColor.BLUE_4:
 							tiles[xx + (yy * WIDTH)] = new TileFloor(xx * 32, yy *  32, TileFloor.TILE_GRASS);
 							Game.items.add(new EntityItems(xx * 32, yy *  32, 32, 32, EntityItems.LIFEPACK_HEART));
 							break;
-						case 0xff606589:
+						case MapColor.BLUE_5:
 							tiles[xx + (yy * WIDTH)] = new TileFloor(xx * 32, yy *  32, TileFloor.TILE_GRASS);
 							Game.items.add(new EntityItems(xx * 32, yy *  32, 32, 32, EntityItems.CROSS));
 							break;
 						default:
-							System.out.println("Ch�o");
+							System.out.println("Nothing");
 					}
 				}
 			}
@@ -113,10 +113,10 @@ public class World
 		int x4 = (xMap + TILE_SIZE - 1) / TILE_SIZE;
 		int y4 = (yMap + TILE_SIZE - 1) / TILE_SIZE;
 		
-		return !(pixels[x1 + (y1 * WIDTH)] == 0xffffffff || pixels[x1 + (y1 * WIDTH)] == 0xff3d6b67 ||
-					  pixels[x2 + (y2 * WIDTH)] == 0xffffffff || pixels[x2 + (y2 * WIDTH)] == 0xff3d6b67 ||
-					  pixels[x3 + (y3 * WIDTH)] == 0xffffffff || pixels[x3 + (y3 * WIDTH)] == 0xff3d6b67 ||
-					  pixels[x4+ (y4 * WIDTH)] == 0xffffffff || pixels[x4 + (y4 * WIDTH)] == 0xff3d6b67);
+		return !(pixels[x1 + (y1 * WIDTH)] == MapColor.YELLOW_1 || pixels[x1 + (y1 * WIDTH)] == MapColor.YELLOW_2 ||
+				 pixels[x2 + (y2 * WIDTH)] == MapColor.YELLOW_1 || pixels[x2 + (y2 * WIDTH)] == MapColor.YELLOW_2 ||
+				 pixels[x3 + (y3 * WIDTH)] == MapColor.YELLOW_1 || pixels[x3 + (y3 * WIDTH)] == MapColor.YELLOW_2 ||
+				 pixels[x4 + (y4 * WIDTH)] == MapColor.YELLOW_1 || pixels[x4 + (y4 * WIDTH)] == MapColor.YELLOW_2);
 	}
 		
 	public static void renderWater(Graphics g) 

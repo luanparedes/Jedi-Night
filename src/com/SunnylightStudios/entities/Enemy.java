@@ -17,5 +17,4 @@ public class Enemy extends Entity
 	{
 		super(x, y, sprite);
 	}
-
 }

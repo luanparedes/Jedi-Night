@@ -44,7 +44,13 @@ public class Game extends Canvas implements Runnable, KeyListener
 	
 	//World
 	public static World world;
-	
+
+	public static void main(String[] args)
+	{
+		Game game = new Game();
+		game.start();
+	}
+
 	public Game() 
 	{
 		this.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
@@ -64,8 +70,35 @@ public class Game extends Canvas implements Runnable, KeyListener
 		world = new World("/map1.png");
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	}
-	
-	public void initFrame() 
+
+	public synchronized void start()
+	{
+		this.run();
+		thread = new Thread();
+		isRunning = true;
+		thread.start();
+	}
+
+	public synchronized void update()
+	{
+		//TODO
+	}
+
+	public synchronized void stop()
+	{
+		isRunning = false;
+
+		try
+		{
+			thread.join();
+		}
+		catch(InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	private void initFrame()
 	{
 		frame = new JFrame("Jedi Nights");
 		frame.add(this);
@@ -76,40 +109,7 @@ public class Game extends Canvas implements Runnable, KeyListener
 		frame.pack();
 	}
 	
-	public synchronized void start() 
-	{
-		this.run();
-		thread = new Thread();
-		isRunning = true;
-		thread.start();
-	}
-	
-	public synchronized void stop()
-	{
-		isRunning = false;
-		
-		try 
-		{
-			thread.join();
-		}
-		catch(InterruptedException e) 
-		{
-			e.printStackTrace();
-		}
-	}
-	
-	public static void main(String[] args)
-	{
-		Game game = new Game();
-		game.start();
-	}
-		
-	public void update() 
-	{
-		//TODO
-	}
-	
-	public void render() 
+	private void render()
 	{		
 		BufferStrategy bs = this.getBufferStrategy();
 		
@@ -284,4 +284,3 @@ public class Game extends Canvas implements Runnable, KeyListener
 		
 	}
 }
-
