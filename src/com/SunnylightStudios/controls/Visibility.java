@@ -1,7 +1,7 @@
 package com.SunnylightStudios.controls;
 
-public enum Visibility {
-
+public enum Visibility 
+{
 	WATER_TILE,
 	FLOOR_TILE,
 	CONTACT_TILE,
