@@ -8,8 +8,8 @@ import com.SunnylightStudios.controls.Visibility;
 import com.SunnylightStudios.main.Game;
 import com.SunnylightStudios.world.Camera;
 
-public class Entity {
-
+public class Entity 
+{
 	protected int x;
 	protected int y;
 	protected int width;
@@ -26,7 +26,8 @@ public class Entity {
 	public static BufferedImage GOLD = Game.spritesheetItems.getSprite(32, 0, 32, 32);
 	public static BufferedImage CROSS = Game.spritesheetItems.getSprite(256, 0, 32, 32);
 	
-	public Entity(int x, int y, int width, int height, BufferedImage sprite) {
+	public Entity(int x, int y, int width, int height, BufferedImage sprite) 
+	{
 		this.setX(x);
 		this.setY(y);
 		this.setWidth(width);
@@ -34,58 +35,71 @@ public class Entity {
 		this.setSprite(sprite);
 	}
 	
-	public Entity(int x, int y, BufferedImage sprite) {
+	public Entity(int x, int y, BufferedImage sprite) 
+	{
 		this.setX(x);
 		this.setY(y);
 		this.setSprite(sprite);
 	}
 	
-	public void render(Graphics g) {
+	public void render(Graphics g) 
+	{
 		g.drawImage(sprite, this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 	
-	public void tick() {
+	public void tick() 
+	{
 		
 	}
 	
 	// Getters & Setters
-	public int getX() {
+	public int getX() 
+	{
 		return this.x;
 	}
 	
-	public void setX(int x) {
+	public void setX(int x) 
+	{
 		this.x = x;
 	}
 	
-	public int getY() {
+	public int getY() 
+	{
 		return this.y;
 	}
 	
-	public void setY(int y) {
+	public void setY(int y) 
+	{
 		this.y = y;
 	}
 	
-	public int getWidth() {
+	public int getWidth() 
+	{
 		return this.width;
 	}
 	
-	public void setWidth(int width) {
+	public void setWidth(int width) 
+	{
 		this.width = width;
 	}
 	
-	public int getHeight() {
+	public int getHeight() 
+	{
 		return this.height;
 	}
 	
-	public void setHeight(int height) {
+	public void setHeight(int height) 
+	{
 		this.height = height;
 	}
 	
-	public BufferedImage getSprite() {
+	public BufferedImage getSprite() 
+	{
 		return this.sprite;
 	}
 	
-	public void setSprite(BufferedImage sprite) {
+	public void setSprite(BufferedImage sprite) 
+	{
 		this.sprite = sprite;
 	}
 }
