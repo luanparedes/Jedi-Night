@@ -30,7 +30,7 @@ public class Player extends Entity
 	{
 		super(x, y, width, height, sprite);
 		this.collider = new Collider(x, y + 22, 32, 32);
-		this.VISIBLE = Visibility.ENTITY_TILE;
+		this.visibility = Visibility.ENTITY_TILE;
 		
 		createPlayerSprites();
 	}

@@ -17,7 +17,7 @@ public class Entity
 	
 	private BufferedImage sprite;
 	public Collider collider;
-	public Visibility VISIBLE;
+	public Visibility visibility;
 	
 	public static BufferedImage SABER = Game.spritesheetItems.getSprite(128, 0, 32, 32);
 	public static BufferedImage LASER_GUN = Game.spritesheetItems.getSprite(160, 0, 32, 32);

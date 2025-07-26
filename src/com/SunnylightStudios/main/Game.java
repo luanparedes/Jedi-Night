@@ -66,7 +66,7 @@ public class Game extends Canvas implements Runnable, KeyListener
 		//Initializing objects
 		entities = new ArrayList<Entity>();
 		items = new ArrayList<EntityItems>();
-		player1 = new Player(0, 0, 30, 48, spritesheetPlayer1.getSprite(0, 0, 32, 50));	
+		player1 = new Player(0, 0, 30, 48, spritesheetPlayer1.getSprite(0, 0, 32, 50));
 		world = new World("/map1.png");
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	}
@@ -136,10 +136,12 @@ public class Game extends Canvas implements Runnable, KeyListener
 		for(int i = 0; i < entities.size(); i++) 
 		{
 			Entity e = entities.get(i);
-			if(e instanceof Player) 
+
+			if(e instanceof Player)
 			{
 				//Estou dando tick no player
 			}
+
 			e.tick();
 		}
 	}
@@ -199,7 +201,7 @@ public class Game extends Canvas implements Runnable, KeyListener
 	{
 		for(EntityItems i : items) 
 		{
-			if(i.VISIBLE == Visibility.ITEMS_TILE) 
+			if(i.visibility == Visibility.ITEMS_TILE)
 			{
 				i.render(g);
 			}
@@ -210,7 +212,7 @@ public class Game extends Canvas implements Runnable, KeyListener
 	{
 		for(Entity i : entities) 
 		{
-			if(i.VISIBLE == Visibility.ENTITY_TILE) 
+			if(i.visibility == Visibility.ENTITY_TILE)
 			{
 				i.render(g);
 			}

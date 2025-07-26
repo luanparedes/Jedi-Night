@@ -12,7 +12,7 @@ public class EntityItems extends Entity
 		super(x, y, width, height, sprite);
 		this.collider = new Collider(x, y, width, height);
 		
-		this.VISIBLE = Visibility.ITEMS_TILE;
+		this.visibility = Visibility.ITEMS_TILE;
 	}
 
 }

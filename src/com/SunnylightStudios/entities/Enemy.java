@@ -2,6 +2,7 @@ package com.SunnylightStudios.entities;
 
 import java.awt.image.BufferedImage;
 
+import com.SunnylightStudios.controls.Visibility;
 import com.SunnylightStudios.main.Game;
 
 public class Enemy extends Entity 
@@ -16,5 +17,6 @@ public class Enemy extends Entity
 	public Enemy(int x, int y, BufferedImage sprite) 
 	{
 		super(x, y, sprite);
+		visibility = Visibility.ENTITY_TILE;
 	}
 }
